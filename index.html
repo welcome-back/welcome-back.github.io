@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Browser home page provided by John W. Kilgo VI">
+    <meta name="keywords" content="john kilgo,john w kilgo vi,jk webdev,john kilgo startpage,jk webdev startpage">
+    <meta name="author" content="jkweb.solutions">
+    <link rel="icon" href="include/favicon.ico">
+    <title>Welcome Back! | Startpage provided by jkweb.solutions</title>
+    <!-- Based on Cover template by @mdo -->
+    <!-- Bootstrap core CSS -->
+    <link href="include/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="include/bootstrap/css/cover.css" rel="stylesheet">
+    <link href="include/custom.css" rel="stylesheet">
+    <link href="include/fa/css/font-awesome.min.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <!-- Begin main Bootstrap -->
+    <div class="site-wrapper">
+      <div class="site-wrapper-inner">
+        <div class="cover-container">
+          <div class="masthead clearfix">
+            <div class="inner">
+              <h3 class="masthead-brand"><a href="//jkweb.solutions/">JK WebDev</a></h3>
+              <nav>
+                <ul class="nav masthead-nav">
+                  <li id="music" style="display:none;"><a href="#">Music</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+          <div class="inner cover">
+            <div class="main-tools">
+              <form class="form-inline" method="get" action="https://www.google.com/search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="searchTheWeb" name="q" size="30" maxlength="255" placeholder="Search the web..."> </div>
+                <button type="submit" class="btn btn-success">Search</button>
+              </form>
+              <p style="padding-top:20px;">Daily inspiration:</p>
+              <p class="lead" id="quote">&nbsp;</p>
+            </div>
+          </div>
+          <div class="mastfoot">
+            <div class="inner">
+              <p>&copy; 2014-2016 John W. Kilgo VI - <a href="https://bitbucket.org/jkilgo/welcome-back.info" target="_blank">[<i class="fa fa-git"></i>]</a> - Photos I.Z. and/or #6</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="music-wrapper">
+      <iframe src="include/images/blank.png" class="back" id="musicPlayer"></iframe>
+    </div>
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Need migrate as interim solution to FireFox 8tracks failure to play via HTML5 -->
+    <script src="include/bootstrap/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="include/bootstrap/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="include/bootstrap/js/ie10-viewport-bug-workaround.js"></script>
+    <!-- Startpage core JavaScript -->
+    <script type="text/javascript">
+      // Focus the search bar (main purpose of start page)
+      $(document).ready(function() {
+        $("#searchTheWeb").focus();
+      });
+      // Choose random background on each page load from array of backgrounds
+      $(document).ready(function() {
+        if ($(window).width() > 960) {
+          var choice = new Array(3);
+          choice[0] = "frost_twig";
+          choice[1] = "trail";
+          choice[2] = "flower";
+          // Math.floor(Math.random() * (max - min + 1)) + min; <- Random number template
+          var num = Math.floor(Math.random() * (2 - 0 + 1)) + 0;
+          var loc = "url(\'//welcome-back.info/include/images/" + choice[num] + ".jpg\')";
+          console.log(loc); // Debug
+          $('body').css('background-image', loc);
+        }
+      });
+      // Rudimentary quotes implementation, looking to change to something dynamic at some point soon
+      $(document).ready(function() {
+        var day = new Date();
+        var weekday = new Array(7);
+        weekday[0] = "Sunday should primarily be a day of rest.";
+        weekday[1] = "Monday is the best day of the week to get something important done.";
+        weekday[2] = "Tuesday's here. Don't lose focus.";
+        weekday[3] = "What is today? It's Prince Spaghetti Day.";
+        weekday[4] = "Thursday is a great day to be productive.";
+        weekday[5] = "Friday night is a good time to get ahead.";
+        weekday[6] = "Saturday can be used to get ahead.";
+        document.getElementById("quote").innerHTML = '\"' + weekday[day.getDay()] + '\"';
+      });
+
+
+      $(document).ready(function() {
+        if ( $(window).width() > 1100 ) {
+          $("#music").show();
+        }
+        else {
+          $("#music").hide();
+        }
+      });
+
+      // Music functionality: Called by navigation button
+      $.fn.redraw = function(){
+        $(this).each(function(){
+          var redraw = this.offsetHeight;
+        });
+      };
+      $("#music-wrapper").height($(document).height());
+      var musicToggle = 0;
+      $( "#music" ).click(function() {
+        /* Modify main site content */
+        if (musicToggle == 0) {
+          $( ".site-wrapper" ).css("margin-left","-2%");
+          $( ".site-wrapper" ).css("width","60%");
+          $( ".site-wrapper" ).redraw();
+          $( ".site-wrapper-inner" ).redraw();
+
+          document.getElementById("musicPlayer").src = "https://8tracks.com/mixes/" + "6465180" + "/player_v3_universal/autoplay";
+
+
+        } else {
+          $( ".site-wrapper" ).css("margin-left","auto");
+          $( ".site-wrapper" ).css("width","80%");
+          $( ".site-wrapper" ).redraw();
+          $( ".site-wrapper-inner" ).redraw();
+
+          document.getElementById("musicPlayer").src = "include/images/blank.png";
+
+
+        }
+
+        if (musicToggle == 0){
+          musicToggle = 1;
+        } else {
+          musicToggle = 0;
+        }
+        $( "#music-wrapper" ).toggle();
+        
+        console.log("#music called");
+
+      });
+
+
+
+
+      var music_old = function() {
+        console.log("music() called"); // Debug
+        if (musicToggle == 0) {
+          var mix = new Array(5);
+          mix[0] = "677414";
+          mix[1] = "6465180"
+          mix[2] = "3394063";
+          mix[3] = "3394290";
+          mix[4] = "3394355";
+          mix[5] = "3394421";
+          mix[6] = "5446808";
+          // Math.floor(Math.random() * (max - min + 1)) + min; <- Random number template
+          var num = 1;
+          // Insert the music player into background iframe
+          // $.browser.mozilla is a hackish method, will need to try to convert to feature detection
+          if ($.browser.mozilla) {
+            document.getElementById("unsupportedMusic").src = "https://8tracks.com/mixes/" + mix[num] + "/player_v3/autoplay";
+          } else {
+            document.getElementById("musicPlayer").src = "https://8tracks.com/mixes/" + mix[num] + "/player_v3_universal/autoplay";
+            // Various toggles for display
+            $(".masthead-brand").css('visibility', 'hidden');
+            $(".main-tools").css('visibility', 'hidden');
+          }
+          document.getElementById("musicSwitch").innerHTML = 'On';
+          $("#musicLink").toggleClass("active");
+          musicToggle = 1; // State
+        } else if (musicToggle == 1) {
+          // $.browser.mozilla is a hackish method, will need to try to convert to feature detection
+          if ($.browser.mozilla) {
+            document.getElementById("unsupportedMusic").src = "include/images/blank.png";
+          } else {
+            // Remove the music player; insert blank, transparent image
+            document.getElementById("musicPlayer").src = "include/images/blank.png";
+            // Various toggles for display
+            $(".masthead-brand").css('visibility', 'visible');
+            $(".main-tools").css('visibility', 'visible');
+          }
+          document.getElementById("musicSwitch").innerHTML = 'Off';
+          $("#musicLink").toggleClass("active");
+          musicToggle = 0; // State
+        }
+      }
+    </script>
+    <script type="text/javascript">
+      // Track users
+      (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+          (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+          m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+      })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+      ga('create', 'UA-63282781-2', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </body>
+
+</html>
